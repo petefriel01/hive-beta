@@ -17,8 +17,13 @@ export function useHelpers() {
         return new Date(date.setDate(diff));
     };
 
+    const formatArticlesTimeline = () =>{
+
+    };
+
     return{
         getDayFromDatetime,
-        getFirstDayOfWeek
+        getFirstDayOfWeek,
+        formatArticlesTimeline
     };
 }
