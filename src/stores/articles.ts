@@ -1,18 +1,23 @@
 import myAxios from '@/composables/useAxios';
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 // ref()s > state properties
 // computed()s > getters
 // function()s > actions
 
+// /https://api.spaceflightnewsapi.net/v3/articles?_sort=publishedAt&summary_contains=SpaceX
+
 export const useArticlesStore = defineStore('articles', () => {
 
-    // do a published at para and then load on scroll down
+    const articles = ref([]);
+
     const fetchArticles = async(publishedAt: string) => {
         const headlines = await myAxios
             .get(`${import.meta.env.VITE_SPACENEWS_API_URL}/articles?_limit=100&publishedAt_gt=2022-09-01T00:00:00.001Z`)
             .then((response) => {
                 console.log(response.data);
+                articles.value = response.data;
                 return response.data || null;
             })
             .catch((error) => {
@@ -21,5 +26,8 @@ export const useArticlesStore = defineStore('articles', () => {
         return headlines;
     };
 
-    return { fetchArticles };
+    return {
+        articles,
+        fetchArticles
+    };
 });

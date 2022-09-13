@@ -3,5 +3,3 @@
         <slot />
     </v-container>
 </template>
-<style>
-</style>

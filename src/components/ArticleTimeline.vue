@@ -1,8 +1,39 @@
+<script setup lang='ts'>
+import { useHelpers } from '@/composables/useHelpers.js';
+import { useArticlesStore } from '@/stores/articles';
+import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
+const ArticleTimelineItemCard = defineAsyncComponent(() => import('@/components/ArticleTimelineItemCard.vue'));
+
+const store = useArticlesStore();
+const articleList = ref();
+const storyStack = reactive([]);
+
+const {
+    getDayFromDatetime,
+} = useHelpers();
+
+const formatArticleList = () => {
+    const date = new Date();
+    let today = getDayFromDatetime(date);
+    for(var i = 0; i < today; i++){
+        storyStack.unshift(articleList.value.filter((item) => {
+            return getDayFromDatetime(item.publishedAt) == i;
+        }));
+    }
+};
+
+onBeforeMount(async() => {
+    articleList.value = await store.fetchArticles('2022-09-01T08:41:11.000Z');
+    formatArticleList();
+});
+
+</script>
+
 <template>
     🌌👩‍🚀🌟🌑 timeline / search / analytics
     pagination, source filter, autocomplete
-    <h1>THIS WEEK</h1>
-    <v-timeline>
+    <h1>month # week # day</h1>
+    <v-timeline align="start">
         <v-timeline-item
             v-for="(day, index) in storyStack"
             :key="`timeline-item-${index}`"
@@ -32,38 +63,6 @@
     </v-timeline>
 </template>
 
-<script setup lang='ts'>
-import { useHelpers } from '@/composables/useHelpers.js';
-import { useArticlesStore } from '@/stores/articles';
-import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
-const ArticleTimelineItemCard = defineAsyncComponent(() => import('@/components/ArticleTimelineItemCard.vue'));
-
-const store = useArticlesStore();
-const articleList = ref();
-const storyStack = reactive([]);
-
-const {
-    getDayFromDatetime,
-    formatArticlesTimeline,
-} = useHelpers();
-
-onBeforeMount(async() => {
-    articleList.value = await store.fetchArticles('2022-09-01T08:41:11.000Z');
-
-    // formatArticlesTimeline
-    const date = new Date();
-    let today = getDayFromDatetime(date);
-    for(var i = 0; i < today; i++){
-        storyStack.unshift(articleList.value.filter((item) => {
-            return getDayFromDatetime(item.publishedAt) == i;
-        }));
-    }
-
-    console.log(storyStack);
-
-});
-
-</script>
 <style scoped >
     .v-timeline >>> .v-timeline-divider__inner-dot{
         background-color: transparent;
