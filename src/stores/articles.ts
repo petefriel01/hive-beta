@@ -12,9 +12,9 @@ export const useArticlesStore = defineStore('articles', () => {
 
     const articles = ref([]);
 
-    const fetchArticles = async(publishedAt: string) => {
+    const fetchArticles = async(publishedAt: string, limit: number = 100) => {
         const headlines = await myAxios
-            .get(`${import.meta.env.VITE_SPACENEWS_API_URL}/articles?_limit=100&publishedAt_gt=2022-09-01T00:00:00.001Z`)
+            .get(`${import.meta.env.VITE_SPACENEWS_API_URL}/articles?_limit=${limit}&publishedAt_gt=2022-09-01T00:00:00.001Z`)
             .then((response) => {
                 console.log(response.data);
                 articles.value = response.data;

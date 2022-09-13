@@ -12,24 +12,33 @@ const storeArticles = useArticlesStore();
 const storeSources = useSourcesStore();
 
 //commit to store
-const articleList = ref();
-const sourceList = ref();
-const searchText = ref();
+const articleList = ref([]);
+const sourceList = ref([]);
+const searchText = ref('');
 const sources = ref();
+const page = ref(1);
+const pageSize = ref(5);
 
-const handleSearch = (value) => {
+const handleSearch = (value: string = '') => {
     console.log(value);
     searchText.value = value;
 };
 
-const filterBySource = async (source) => {
+const handleNext = (pageNumber: number = 100) => {
+    console.log(pageNumber);
+    console.log(articleList.value.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value));
+    articleList.value = storeArticles.articles.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value);
+};
+
+const filterBySource = async (source: string = '') => {
     articleList.value = storeArticles.articles.filter((item) => item.newsSite = source);
 };
 
 onBeforeMount(async ()=> {
     articleList.value = await storeArticles.fetchArticles('2022-09-01T08:41:11.000Z');
+    articleList.value = storeArticles.articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
     // Return only sources available on results page
-    sourceList.value =  [...new Set( articleList.value.map(item => item.newsSite))];
+    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))];
 });
 
 </script>
@@ -77,4 +86,18 @@ onBeforeMount(async ()=> {
             />
         </v-col>
     </v-row>
+    <v-footer app>
+        <v-card
+            elevation="0"
+            rounded="0"
+            width="100%"
+            class="text-center"
+        >
+            <v-pagination
+                v-model="page"
+                :length="10"
+                @update:model-value="handleNext"
+            ></v-pagination>
+        </v-card>
+    </v-footer>
 </template>
