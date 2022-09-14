@@ -6,7 +6,10 @@ import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
 // Components
 const ArticleTimeline = defineAsyncComponent(() => import('../components/ArticleTimeline.vue'));
 
+const chartData = ref([]);
+
 const {
+    getFirstDayOfWeek,
     getDayFromDatetime,
 } = useHelpers();
 
@@ -25,10 +28,10 @@ const radarOptions = reactive({
 });
 const radarSeries = reactive( [{
     name: 'series-1',
-    data: [90, 40, 45, 0, 0, 0, 0]
+    data: chartData.value
 }]);
 
-const donutSeries = reactive([10, 10, 10, 0, 0, 0, 0 ]);
+const donutSeries = reactive(chartData.value);
 const donutOptions = reactive({
     chart: {
         type: 'donut',
@@ -62,15 +65,14 @@ const areaOptions = reactive({
 //only add in days with data
 const areaSeries = reactive( [{
     name: 'series-1',
-    data: [90, 40, 45]
+    data: chartData.value
 }]);
 
 const formatArticleList = () => {
-    const date = new Date();
-    let today = getDayFromDatetime(date);
-    for(var i = 0; i < today; i++){
-        storyStack.unshift(articleList.value.filter((item) => {
-            console.log(getDayFromDatetime(item.publishedAt));
+    const today = new Date().getDate();
+    const monday = getFirstDayOfWeek(new Date()).getDate();
+    for(var i = monday; i <= today; i++){
+        storyStack.push(articleList.value.filter((item) => {
             return getDayFromDatetime(item.publishedAt) == i;
         }));
     }
@@ -81,6 +83,11 @@ onBeforeMount(async() => {
     formatArticleList();
     volume.value = await store.articleCount;
     console.log(storyStack);
+    storyStack.forEach((item)=> {
+        console.log(item.length);
+        chartData.value.push(item.length);
+    });
+    console.log(chartData.value);
 });
 
 </script>

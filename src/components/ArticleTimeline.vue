@@ -10,11 +10,13 @@ const storyStack = reactive([]);
 
 const {
     getDayFromDatetime,
+    getFirstDayOfWeek,
 } = useHelpers();
 
 const formatArticleList = () => {
     const today = new Date().getDate();
-    for(var i = 11; i <= today; i++){
+    const monday = getFirstDayOfWeek(new Date()).getDate();
+    for(var i = monday; i <= today; i++){
         storyStack.unshift(articleList.value.filter((item) => {
             return getDayFromDatetime(item.publishedAt) == i;
         }));
@@ -24,7 +26,6 @@ const formatArticleList = () => {
 onBeforeMount(async() => {
     articleList.value = await store.fetchArticles('2022-09-01T08:41:11.000Z');
     formatArticleList();
-    console.log(storyStack);
 });
 
 </script>
@@ -51,8 +52,8 @@ onBeforeMount(async() => {
                 🚀
             </template>
             <template v-slot:opposite>
-                <!-- <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3> -->
-                Date
+                <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3>
+                Wrong Date
             </template>
             <ArticleTimelineItemCard
                 v-for="(article, i) in storyStack[index]"
