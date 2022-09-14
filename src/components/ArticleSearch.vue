@@ -11,23 +11,26 @@ const SearchWidget = defineAsyncComponent(() => import('@/components/SearchWidge
 const storeArticles = useArticlesStore();
 const storeSources = useSourcesStore();
 
-//commit to store
 const articleList = ref([]);
 const sourceList = ref([]);
 const searchText = ref('');
 const sources = ref();
 const page = ref(1);
 const pageSize = ref(5);
+const pageTotal = ref(0);
 
 const handleSearch = (value: string = '') => {
     console.log(value);
     searchText.value = value;
+    articleList.value = storeArticles.articles.filter(item => item.title.toLowerCase().indexOf(searchText.value) > -1);
+    console.log(articleList.value);
 };
 
 const handleNext = (pageNumber: number = 100) => {
     console.log(pageNumber);
     console.log(articleList.value.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value));
     articleList.value = storeArticles.articles.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value);
+    console.log(articleList.value.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value));
 };
 
 const filterBySource = async (source: string = '') => {
@@ -35,10 +38,10 @@ const filterBySource = async (source: string = '') => {
 };
 
 onBeforeMount(async ()=> {
-    articleList.value = await storeArticles.fetchArticles('2022-09-01T08:41:11.000Z');
+    const articles = await storeArticles.fetchArticles();
     articleList.value = storeArticles.articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
-    // Return unique array with sources only available from articleList
-    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))];
+    pageTotal.value = Math.round(articles.length / pageSize.value);
+    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return unique array with sources only available from articleList
 });
 
 </script>
@@ -95,7 +98,7 @@ onBeforeMount(async ()=> {
         >
             <v-pagination
                 v-model="page"
-                :length="10"
+                :length="pageTotal"
                 @update:model-value="handleNext"
             ></v-pagination>
         </v-card>

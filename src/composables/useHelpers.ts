@@ -5,27 +5,22 @@ export function useHelpers() {
 
     const getWeekStarting = () => getTodayDate().slice(0,8)+getFirstDayOfWeek(new Date()).getDate();
 
-    const getDayFromDatetime = (d) => {
+    const getDayFromDatetime = (d: string) => {
         if(!d){
-            return null;
+            return;
         }
         return d.split('T')[0].split('-')[2];
     };
 
-    const getFirstDayOfWeek = (d) => {
+    const getFirstDayOfWeek = (d: string) => {
         if(!d){
-            return null;
+            return;
         }
-        // 👇️ clone date object, so we don't mutate it
         const date = new Date(d);
-        const day = date.getDay(); // 👉️ get day of week
-        // 👇️ day of month - day of week (-6 if Sunday), otherwise +1
+        const day = date.getDay();
         const diff = date.getDate() - day + (day === 0 ? -6 : 1);
         return new Date(date.setDate(diff));
     };
-
-    // const weekStarting = getFirstDayOfWeek(new Date()).getDate();
-    // const monday = today.slice(0,8)+weekStarting;
 
     const getArticlesPerDay = (articleList: any[]) => {
         const storyStack = [];

@@ -12,28 +12,14 @@ const {
     getArticlesPerDay,
 } = useHelpers();
 
-// const getTimelineAsc = () => {
-//     const today = new Date().getDate();
-//     const monday = getFirstDayOfWeek(new Date()).getDate();
-//     for(let i = monday; i <= today; i++){
-//         storyStack.value.unshift(articleList.value.filter((item) => {
-//             return getDayFromDatetime(item.publishedAt) == i;
-//         }));
-//     }
-// };
-
 onBeforeMount(async() => {
     articleList.value = await store.fetchArticles();
-    //getTimelineAsc();
     storyStack.value = getArticlesPerDay(articleList.value).reverse();
 });
 
 </script>
 
 <template>
-    🌌👩‍🚀🌟🌑 timeline / search / analytics
-    pagination, source filter, autocomplete
-    <h1>month # week # day</h1>
     <v-timeline align="start">
         <v-timeline-item
             v-for="(day, index) in storyStack"
@@ -52,8 +38,7 @@ onBeforeMount(async() => {
                 🚀
             </template>
             <template v-slot:opposite>
-                <!-- <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3> -->
-                Wrong Date
+                <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3>
             </template>
             <ArticleCard
                 v-for="(article, i) in storyStack[index]"

@@ -22,7 +22,7 @@ const { article } = toRefs(props);
         <v-row>
             <v-col>
                 <v-card-subtitle class="text-uppercase font-weight-bold text-h6">
-                    {{article.newsSite}} # {{article.publishedAt}}
+                    {{article.newsSite}} <span v-html="$hivebeta.formatDate(article.publishedAt)"></span>
                 </v-card-subtitle>
                 <v-card-title v-if="article.title">
                     <v-btn variant="plain" :href="article.url" target="_blank" class="text-wrap px-0">
@@ -31,7 +31,7 @@ const { article } = toRefs(props);
                 </v-card-title>
             </v-col>
             <v-col>
-                <v-img class="rounded-circle ml-auto" :lazy-src="article.imageUrl" :src="article.imageUrl" width="200" ></v-img>
+                <v-img class="rounded-circle ml-auto" :lazy-src="article.imageUrl" width="200" ></v-img>
             </v-col>
         </v-row>
         <v-row>
@@ -46,7 +46,6 @@ const { article } = toRefs(props);
                         @click="show = !show"
                     ></v-btn>
                 </v-card-actions>
-
             </v-col>
         </v-row>
         <v-expand-transition>
