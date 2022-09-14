@@ -6,7 +6,6 @@ import { ref } from 'vue';
 const {
     getTodayDate,
     getWeekStarting,
-    getFirstDayOfWeek,
 } = useHelpers();
 
 // ref()s > state properties

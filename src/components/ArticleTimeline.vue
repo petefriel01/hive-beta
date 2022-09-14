@@ -1,31 +1,31 @@
 <script setup lang='ts'>
 import { useHelpers } from '@/composables/useHelpers.js';
 import { useArticlesStore } from '@/stores/articles';
-import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
-const ArticleTimelineItemCard = defineAsyncComponent(() => import('@/components/ArticleTimelineItemCard.vue'));
+import { defineAsyncComponent, onBeforeMount, ref } from 'vue';
+const ArticleCard = defineAsyncComponent(() => import('@/components/ArticleCard.vue'));
 
 const store = useArticlesStore();
 const articleList = ref([]);
-const storyStack = reactive([]);
+const storyStack = ref([]);
 
 const {
-    getDayFromDatetime,
-    getFirstDayOfWeek,
+    getArticlesPerDay,
 } = useHelpers();
 
-const getTimelineAsc = () => {
-    const today = new Date().getDate();
-    const monday = getFirstDayOfWeek(new Date()).getDate();
-    for(let i = monday; i <= today; i++){
-        storyStack.unshift(articleList.value.filter((item) => {
-            return getDayFromDatetime(item.publishedAt) == i;
-        }));
-    }
-};
+// const getTimelineAsc = () => {
+//     const today = new Date().getDate();
+//     const monday = getFirstDayOfWeek(new Date()).getDate();
+//     for(let i = monday; i <= today; i++){
+//         storyStack.value.unshift(articleList.value.filter((item) => {
+//             return getDayFromDatetime(item.publishedAt) == i;
+//         }));
+//     }
+// };
 
 onBeforeMount(async() => {
     articleList.value = await store.fetchArticles();
-    getTimelineAsc();
+    //getTimelineAsc();
+    storyStack.value = getArticlesPerDay(articleList.value).reverse();
 });
 
 </script>
@@ -52,10 +52,10 @@ onBeforeMount(async() => {
                 🚀
             </template>
             <template v-slot:opposite>
-                <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3>
+                <!-- <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3> -->
                 Wrong Date
             </template>
-            <ArticleTimelineItemCard
+            <ArticleCard
                 v-for="(article, i) in storyStack[index]"
                 :key="`timeline-article-${i}`"
                 :article="article"

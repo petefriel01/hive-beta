@@ -5,7 +5,7 @@ import { defineAsyncComponent, onBeforeMount, ref } from 'vue';
 import { useArticlesStore } from '@/stores/articles';
 import { useSourcesStore } from '@/stores/sources';
 
-const ArticleTimelineItemCard = defineAsyncComponent(() => import('@/components/ArticleTimelineItemCard.vue'));
+const ArticleCard = defineAsyncComponent(() => import('@/components/ArticleCard.vue'));
 const SearchWidget = defineAsyncComponent(() => import('@/components/SearchWidget.vue'));
 
 const storeArticles = useArticlesStore();
@@ -79,7 +79,7 @@ onBeforeMount(async ()=> {
     </v-row>
     <v-row>
         <v-col v-if="articleList">
-            <ArticleTimelineItemCard
+            <ArticleCard
                 v-for="(article, index) in articleList"
                 :key="`article-${index}`"
                 :article="article"
