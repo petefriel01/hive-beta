@@ -13,10 +13,10 @@ const {
     getFirstDayOfWeek,
 } = useHelpers();
 
-const formatArticleList = () => {
+const getTimelineAsc = () => {
     const today = new Date().getDate();
     const monday = getFirstDayOfWeek(new Date()).getDate();
-    for(var i = monday; i <= today; i++){
+    for(let i = monday; i <= today; i++){
         storyStack.unshift(articleList.value.filter((item) => {
             return getDayFromDatetime(item.publishedAt) == i;
         }));
@@ -24,8 +24,8 @@ const formatArticleList = () => {
 };
 
 onBeforeMount(async() => {
-    articleList.value = await store.fetchArticles('2022-09-01T08:41:11.000Z');
-    formatArticleList();
+    articleList.value = await store.fetchArticles();
+    getTimelineAsc();
 });
 
 </script>

@@ -1,6 +1,13 @@
 import myAxios from '@/composables/useAxios';
+import { useHelpers } from '@/composables/useHelpers.js';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+
+const {
+    getTodayDate,
+    getWeekStarting,
+    getFirstDayOfWeek,
+} = useHelpers();
 
 // ref()s > state properties
 // computed()s > getters
@@ -15,7 +22,7 @@ export const useArticlesStore = defineStore('articles', () => {
 
     const fetchArticles = async(publishedAt: string, limit: number = 10000) => {
         const headlines = await myAxios
-            .get(`${import.meta.env.VITE_SPACENEWS_API_URL}/articles?_limit=${limit}&publishedAt_gt=2022-09-11T00:00:00.001Z&publishedAt_lt=2022-09-14T23:59:59.999Z`)
+            .get(`${import.meta.env.VITE_SPACENEWS_API_URL}/articles?_limit=${limit}&publishedAt_gt=${getWeekStarting()}T00:00:00.001Z&publishedAt_lt=${getTodayDate()}T23:59:59.999Z`)
             .then((response) => {
                 articles.value = response.data;
                 articleCount.value = response.data.length;

@@ -1,29 +1,24 @@
 <script setup lang="ts">
 import { useHelpers } from '@/composables/useHelpers.js';
 import { useArticlesStore } from '@/stores/articles';
-import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
-
-// Components
-const ArticleTimeline = defineAsyncComponent(() => import('../components/ArticleTimeline.vue'));
-
-const chartData = ref([]);
+import { onBeforeMount, reactive, ref } from 'vue';
 
 const {
-    getFirstDayOfWeek,
-    getDayFromDatetime,
+    getArticlesPerDay,
 } = useHelpers();
 
 const store = useArticlesStore();
 const articleList = ref([]);
 const volume = ref(0);
-const storyStack = reactive([]);
+const chartData = ref([]);
+const chartDays = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
 
 const radarOptions = reactive({
     chart: {
         id: 'vuechart-example'
     },
     xaxis: {
-        categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        categories: chartDays.value
     }
 });
 const radarSeries = reactive( [{
@@ -36,7 +31,7 @@ const donutOptions = reactive({
     chart: {
         type: 'donut',
     },
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    labels: chartDays.value,
     legend: {
         show: false
     },
@@ -58,36 +53,21 @@ const areaOptions = reactive({
         id: 'vuechart-example'
     },
     xaxis: {
-        categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        categories: chartDays.value
     }
 });
 
-//only add in days with data
 const areaSeries = reactive( [{
     name: 'series-1',
     data: chartData.value
 }]);
 
-const formatArticleList = () => {
-    const today = new Date().getDate();
-    const monday = getFirstDayOfWeek(new Date()).getDate();
-    for(var i = monday; i <= today; i++){
-        storyStack.push(articleList.value.filter((item) => {
-            return getDayFromDatetime(item.publishedAt) == i;
-        }));
-    }
-};
-
 onBeforeMount(async() => {
-    articleList.value = await store.fetchArticles('2022-09-01T08:41:11.000Z');
-    formatArticleList();
-    volume.value = await store.articleCount;
-    console.log(storyStack);
-    storyStack.forEach((item)=> {
-        console.log(item.length);
+    articleList.value = await store.fetchArticles();
+    volume.value = articleList.value.length;
+    getArticlesPerDay(articleList.value).forEach((item)=> {
         chartData.value.push(item.length);
     });
-    console.log(chartData.value);
 });
 
 </script>
