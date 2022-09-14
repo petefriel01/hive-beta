@@ -5,7 +5,7 @@ import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
 const ArticleTimelineItemCard = defineAsyncComponent(() => import('@/components/ArticleTimelineItemCard.vue'));
 
 const store = useArticlesStore();
-const articleList = ref();
+const articleList = ref([]);
 const storyStack = reactive([]);
 
 const {
@@ -13,9 +13,8 @@ const {
 } = useHelpers();
 
 const formatArticleList = () => {
-    const date = new Date();
-    let today = getDayFromDatetime(date);
-    for(var i = 0; i < today; i++){
+    const today = new Date().getDate();
+    for(var i = 11; i <= today; i++){
         storyStack.unshift(articleList.value.filter((item) => {
             return getDayFromDatetime(item.publishedAt) == i;
         }));
@@ -25,6 +24,7 @@ const formatArticleList = () => {
 onBeforeMount(async() => {
     articleList.value = await store.fetchArticles('2022-09-01T08:41:11.000Z');
     formatArticleList();
+    console.log(storyStack);
 });
 
 </script>
@@ -51,7 +51,8 @@ onBeforeMount(async() => {
                 🚀
             </template>
             <template v-slot:opposite>
-                <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3>
+                <!-- <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index].publishedAt)"></h3> -->
+                Date
             </template>
             <ArticleTimelineItemCard
                 v-for="(article, i) in storyStack[index]"

@@ -1,9 +1,10 @@
 export function useHelpers() {
 
     const getDayFromDatetime = (d) => {
-        const date = new Date(d);
-        const day = date.getDate();
-        return day;
+        if(!d){
+            return null;
+        }
+        return d.split('T')[0].split('-')[2];
     };
 
     const getFirstDayOfWeek = (d) => {

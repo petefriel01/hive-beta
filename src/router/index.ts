@@ -1,7 +1,9 @@
+import { defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import ArticleSearch from '../views/ArticleSearch.vue';
-import ArticleTimeline from '../views/ArticleTimeline.vue';
-import DashBoard from '../views/DashBoard.vue';
+
+const DashBoard = defineAsyncComponent(() => import('@/views/DashBoard.vue'));
+const ArticleTimeline = defineAsyncComponent(() => import('@/views/ArticleTimeline.vue'));
+const ArticleSearch = defineAsyncComponent(() => import('@/views/ArticleSearch.vue'));
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
