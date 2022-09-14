@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ArticleSearch from '../views/ArticleSearch.vue';
+import ArticleTimeline from '../views/ArticleTimeline.vue';
 import DashBoard from '../views/DashBoard.vue';
 
 const router = createRouter({
@@ -9,6 +10,11 @@ const router = createRouter({
             path: '/',
             name: 'DashBoard',
             component: DashBoard,
+        },
+        {
+            path: '/timeline',
+            name: 'ArticleTimeline',
+            component: ArticleTimeline,
         },
         {
             path: '/search',

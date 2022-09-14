@@ -37,7 +37,7 @@ const filterBySource = async (source: string = '') => {
 onBeforeMount(async ()=> {
     articleList.value = await storeArticles.fetchArticles('2022-09-01T08:41:11.000Z');
     articleList.value = storeArticles.articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
-    // Return only sources available on results page
+    // Return unique array with sources only available from articleList
     sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))];
 });
 
