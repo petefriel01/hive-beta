@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useHelpers } from '@/composables/useHelpers.js';
 import { useArticlesStore } from '@/stores/articles';
-import { onBeforeMount, reactive, ref } from 'vue';
+import { defineAsyncComponent, onBeforeMount, reactive, ref } from 'vue';
+
+const AppSpinner = defineAsyncComponent(() => import('@/components/AppSpinner.vue'));
 
 const {
     getArticlesPerDay,
@@ -12,6 +14,7 @@ const articleList = ref([]);
 const volume = ref(0);
 const chartData = ref([]);
 const chartDays = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
+const isLoading = ref(true);
 
 const radarOptions = reactive({
     chart: {
@@ -68,6 +71,7 @@ onBeforeMount(async() => {
     getArticlesPerDay(articleList.value).forEach((item)=> {
         chartData.value.push(item.length);
     });
+    isLoading.value = false;
 });
 
 </script>
@@ -96,6 +100,7 @@ onBeforeMount(async() => {
             <apexchart width="100%" type="area" :options="areaOptions" :series="areaSeries"></apexchart>
         </v-col>
     </v-row>
+    <AppSpinner v-if="isLoading"/>
 </template>
 <style>
     .dev{

@@ -7,6 +7,7 @@ import { useSourcesStore } from '@/stores/sources';
 
 const ArticleCard = defineAsyncComponent(() => import('@/components/ArticleCard.vue'));
 const SearchWidget = defineAsyncComponent(() => import('@/components/SearchWidget.vue'));
+const AppSpinner = defineAsyncComponent(() => import('@/components/AppSpinner.vue'));
 
 const storeArticles = useArticlesStore();
 const storeSources = useSourcesStore();
@@ -18,6 +19,7 @@ const isSource = ref(false);
 const page = ref(1);
 const pageSize = ref(5);
 const pageTotal = ref(0);
+const isLoading = ref(true);
 
 const handleSearch = (value: string = '') => {
     searchText.value = value;
@@ -42,6 +44,7 @@ const paginate = (articles: any[]) => {
     pageTotal.value = Math.round(articles.length / pageSize.value);
     sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return array with sources only available from articleList
     console.log(sourceList.value );
+    isLoading.value = false;
 };
 
 onBeforeMount(async ()=> {
@@ -116,4 +119,5 @@ onBeforeMount(async ()=> {
             ></v-pagination>
         </v-card>
     </v-footer>
+    <AppSpinner v-if="isLoading"/>
 </template>

@@ -3,10 +3,12 @@ import { useHelpers } from '@/composables/useHelpers.js';
 import { useArticlesStore } from '@/stores/articles';
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue';
 const ArticleCard = defineAsyncComponent(() => import('@/components/ArticleCard.vue'));
+const AppSpinner = defineAsyncComponent(() => import('@/components/AppSpinner.vue'));
 
 const store = useArticlesStore();
 const articleList = ref([]);
 const storyStack = ref([]);
+const isLoading = ref(true);
 
 const {
     getArticlesPerDay,
@@ -15,10 +17,10 @@ const {
 onBeforeMount(async() => {
     articleList.value = await store.fetchArticles();
     storyStack.value = getArticlesPerDay(articleList.value).reverse();
+    isLoading.value = false;
 });
 
 </script>
-
 <template>
     <v-timeline align="start" class="mt-8">
         <v-timeline-item
@@ -51,6 +53,7 @@ onBeforeMount(async() => {
             <h2 v-if="!day.length" class="text-uppercase mb-16">no articles</h2>
         </v-timeline-item>
     </v-timeline>
+    <AppSpinner v-if="isLoading"/>
 </template>
 
 <style scoped type="scss">
