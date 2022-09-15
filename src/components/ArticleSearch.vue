@@ -14,34 +14,41 @@ const storeSources = useSourcesStore();
 const articleList = ref([]);
 const sourceList = ref([]);
 const searchText = ref('');
-const sources = ref();
+const isSource = ref(false);
 const page = ref(1);
 const pageSize = ref(5);
 const pageTotal = ref(0);
 
 const handleSearch = (value: string = '') => {
-    console.log(value);
     searchText.value = value;
-    articleList.value = storeArticles.articles.filter(item => item.title.toLowerCase().indexOf(searchText.value) > -1);
-    console.log(articleList.value);
+    const searchType = (!isSource.value) ? 'title' : 'newsSite';
+    const articles = storeArticles.articles.filter((item) => {
+        console.log('in here');
+        return item[searchType].toLowerCase().indexOf(searchText.value) > -1;
+    });
+    paginate(articles);
 };
 
 const handleNext = (pageNumber: number = 100) => {
-    console.log(pageNumber);
-    console.log(articleList.value.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value));
     articleList.value = storeArticles.articles.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value);
-    console.log(articleList.value.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value));
 };
 
 const filterBySource = async (source: string = '') => {
-    articleList.value = storeArticles.articles.filter((item) => item.newsSite = source);
+    console.log(source);
+    const articles =  storeArticles.articles.filter(item => item.newsSite === source);
+    console.log(articleList.value);
+    paginate(articles);
+};
+
+const paginate = (articles: any[]) => {
+    articleList.value =  articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
+    pageTotal.value = Math.round(articles.length / pageSize.value);
 };
 
 onBeforeMount(async ()=> {
     const articles = await storeArticles.fetchArticles();
-    articleList.value = storeArticles.articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
-    pageTotal.value = Math.round(articles.length / pageSize.value);
-    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return unique array with sources only available from articleList
+    paginate(storeArticles.articles);
+    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return array with sources only available from articleList
 });
 
 </script>
@@ -52,9 +59,9 @@ onBeforeMount(async ()=> {
         </v-col>
         <v-col cols="12" xs="12" lg="4" class="d-flex align-center">
             <v-checkbox
-                v-model="sources"
+                v-model="isSource"
+                :label="`Checkbox: ${isSource}`"
                 color="orange"
-                label="sources"
             ></v-checkbox>
             <SearchWidget @update:model-value="handleSearch"/>
         </v-col>
@@ -71,7 +78,7 @@ onBeforeMount(async ()=> {
                     <v-list-item
                         v-for="(source, index) in sourceList"
                         :key="index"
-                        :value="source.id"
+                        :value="source"
                         @click="filterBySource(source)"
                     >
                         <v-list-item-title>{{ source }}</v-list-item-title>
