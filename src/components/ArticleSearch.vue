@@ -23,7 +23,6 @@ const handleSearch = (value: string = '') => {
     searchText.value = value;
     const searchType = (!isSource.value) ? 'title' : 'newsSite';
     const articles = storeArticles.articles.filter((item) => {
-        console.log('in here');
         return item[searchType].toLowerCase().indexOf(searchText.value) > -1;
     });
     paginate(articles);
@@ -34,21 +33,20 @@ const handleNext = (pageNumber: number = 100) => {
 };
 
 const filterBySource = async (source: string = '') => {
-    console.log(source);
     const articles =  storeArticles.articles.filter(item => item.newsSite === source);
-    console.log(articleList.value);
     paginate(articles);
 };
 
 const paginate = (articles: any[]) => {
     articleList.value =  articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
     pageTotal.value = Math.round(articles.length / pageSize.value);
+    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return array with sources only available from articleList
+    console.log(sourceList.value );
 };
 
 onBeforeMount(async ()=> {
     const articles = await storeArticles.fetchArticles();
     paginate(storeArticles.articles);
-    sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return array with sources only available from articleList
 });
 
 </script>
@@ -60,10 +58,10 @@ onBeforeMount(async ()=> {
         <v-col cols="12" xs="12" lg="4" class="d-flex align-center">
             <v-checkbox
                 v-model="isSource"
-                :label="`Checkbox: ${isSource}`"
+                label="News Source"
                 color="orange"
             ></v-checkbox>
-            <SearchWidget @update:model-value="handleSearch"/>
+            <SearchWidget @update:model-value="handleSearch" :titles="(isSource) ? sourceList : []"/>
         </v-col>
         <v-col cols="12" xs="12" lg="4" class="d-flex justify-end">
             <v-menu>
