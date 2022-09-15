@@ -4,15 +4,20 @@ import { defineAsyncComponent, ref, toRefs } from 'vue';
 const ArticleCardTags = defineAsyncComponent(() => import('@/components/ArticleCardTags.vue'));
 
 const show = ref(false);
+const failedImage = ref(false);
 
 const props = defineProps({
     article: {
         type: Object,
         required: true,
     },
+    showDate: {
+        type: Boolean,
+        default: true,
+    }
 });
 
-const { article } = toRefs(props);
+const { article, isTimeline } = toRefs(props);
 
 </script>
 <template>
@@ -22,10 +27,10 @@ const { article } = toRefs(props);
         color="grey-lighten-2"
     >
         <v-row>
-            <v-col cols="12" xs="12" lg="10">
+            <v-col cols="12" xs="12" lg="11">
                 <v-card-subtitle class="text-black font-weight-bold text-uppercase pt-4 text-orange-darken-4">
-                    {{article.newsSite}}
-                    <span class="float-right text-black" v-html="$hivebeta.formatDate(article.publishedAt)"></span>
+                    {{article.newsSite}} {{ isTimeline }}
+                    <span v-if="showDate" class="float-right text-grey-darken-2" v-html="$hivebeta.formatDate(article.publishedAt)"></span>
                 </v-card-subtitle>
                 <v-card-title v-if="article.title">
                     <v-btn flat :href="article.url" target="_blank" class="text-wrap px-0 text-h6">
@@ -33,8 +38,8 @@ const { article } = toRefs(props);
                     </v-btn>
                 </v-card-title>
             </v-col>
-            <v-col cols="12" xs="12" lg="2" class="px-4XXX">
-                <v-img class="ml-auto" :src="article.imageUrl" :lazy-src="article.imageUrl" width="200" height="100" cover></v-img>
+            <v-col cols="12" xs="12" lg="1" class="dev">
+                <img :src="article.imageUrl" class="float-right rounded dev" width="150" height="100" style="object-fit:cover" />
             </v-col>
         </v-row>
         <v-row>
@@ -62,3 +67,8 @@ const { article } = toRefs(props);
         </v-expand-transition>
     </v-card>
 </template>
+<style>
+    .dev{
+        border: solid 1px red;
+    }
+</style>

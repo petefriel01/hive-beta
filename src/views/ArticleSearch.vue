@@ -12,7 +12,7 @@ const ArticleSearch = defineAsyncComponent(() => import('../components/ArticleSe
 <template>
     <OneColumn>
         <v-row>
-            <v-col cols="12" xs="12" lg="12" class="dev">
+            <v-col cols="12" xs="12" lg="12">
                 <ArticleSearch />
             </v-col>
         </v-row>

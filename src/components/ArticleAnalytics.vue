@@ -72,28 +72,33 @@ onBeforeMount(async() => {
 
 </script>
 <template>
-    <v-row>
-        <v-col cols="12" xs="12" lg="12" class="dev text-left">
-            <h3>TOTAL ARTICLES PUBLISHED</h3>
-            <p class="text-h2">{{volume}}</p>
+    <v-row class=" text-leftX devX">
+        <v-col cols="12" xs="12" lg="12" class="my-8">
+            <h3>TOTAL ARTICLES PUBLISHED <span class="text-h2 float-right text-orange font-weight-bold">{{volume}}</span></h3>
+            <p>VIEW: CURRENT WEEK</p>
         </v-col>
     </v-row>
+    <v-divider class="py-8 devX" />
     <v-row>
-        <v-col cols="12" xs="12" lg="4" class="dev">
+        <v-col cols="12" xs="12" lg="4">
             <v-row>
-                <v-col cols="12" xs="12" lg="12" class="dev px-16">
+                <v-col cols="12" xs="12" lg="12" class="px-16">
                     <div class="px-8">
                         <apexchart type="donut" :options="donutOptions" :series="donutSeries"></apexchart>
                     </div>
                 </v-col>
-                <v-col cols="12" xs="12" lg="12" class="dev">
+                <v-col cols="12" xs="12" lg="12">
                     <apexchart width="100%" type="radar" :options="radarOptions" :series="radarSeries"></apexchart>
                 </v-col>
             </v-row>
         </v-col>
-        <v-col cols="12" xs="12" lg="8" class="dev">
+        <v-col cols="12" xs="12" lg="8">
             <apexchart width="100%" type="area" :options="areaOptions" :series="areaSeries"></apexchart>
         </v-col>
     </v-row>
-
 </template>
+<style>
+    .dev{
+        border: solid 1px red;
+    }
+</style>

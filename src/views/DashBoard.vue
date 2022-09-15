@@ -12,19 +12,9 @@ const ArticleAnalytics = defineAsyncComponent(() => import('../components/Articl
 <template>
     <OneColumn>
         <v-row>
-            <v-col cols="12" xs="12" lg="12" class="dev" >
+            <v-col cols="12" xs="12" lg="12">
                 <ArticleAnalytics/>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="12" xs="12" lg="12" class="dev" >
-                More Content
             </v-col>
         </v-row>
     </OneColumn>
 </template>
-<style>
-    .dev{
-        border: solid 1px red;
-    }
-</style>

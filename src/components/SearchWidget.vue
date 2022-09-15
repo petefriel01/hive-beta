@@ -14,8 +14,6 @@ defineProps({
     }
 });
 
-//const titles = ref(['foo', 'bar', 'fizz', 'buzz', 'foo', 'bar', 'fizz']);
-
 const handleInput = (e) => {
     emit('update:modelValue', e.target.value);
 };

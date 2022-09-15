@@ -1,7 +1,12 @@
 <template>
-    <v-app-bar app class="bg-white" elevation="0">
+    <v-app-bar app class="bg-grey-darken-2" elevation="0">
         <v-container>
-            <v-row class="dev">
+            <!-- <v-row>
+                <v-col>
+                    HIVEBETA
+                </v-col>
+            </v-row> -->
+            <v-row>
                 <v-col cols="12" xs="12" lg="10" >
                     <v-btn :to="{name: 'DashBoard'}">Analytics</v-btn>
                     <v-btn :to="{name: 'ArticleTimeline'}">Article Timeline</v-btn>

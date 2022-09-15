@@ -12,14 +12,9 @@ const ArticleTimeline = defineAsyncComponent(() => import('../components/Article
 <template>
     <OneColumn>
         <v-row>
-            <v-col cols="12" xs="12" lg="12" class="dev">
+            <v-col cols="12" xs="12" lg="12">
                 <ArticleTimeline />
             </v-col>
         </v-row>
     </OneColumn>
 </template>
-    <style>
-        .dev{
-            border: solid 1px red;
-        }
-    </style>

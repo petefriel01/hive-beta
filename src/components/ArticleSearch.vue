@@ -52,18 +52,25 @@ onBeforeMount(async ()=> {
 </script>
 <template>
     <v-row class="d-flex align-center">
-        <v-col cols="12" xs="12" lg="4">
+        <v-col cols="12" xs="12" lg="2">
             <h2 class="text-h4">Headlines</h2>
         </v-col>
-        <v-col cols="12" xs="12" lg="4" class="d-flex align-center">
-            <v-checkbox
-                v-model="isSource"
-                label="News Source"
-                color="orange"
-            ></v-checkbox>
-            <SearchWidget @update:model-value="handleSearch" :titles="(isSource) ? sourceList : []"/>
+        <v-col cols="12" xs="12" lg="8" class="pt-8">
+            <v-row>
+                <v-col cols="2">
+                    <v-checkbox
+                        v-model="isSource"
+                        label="News Source"
+                        color="orange"
+                        class="float-right"
+                    ></v-checkbox>
+                </v-col>
+                <v-col cols="8">
+                    <SearchWidget @update:model-value="handleSearch" :titles="(isSource) ? sourceList : []"/>
+                </v-col>
+            </v-row>
         </v-col>
-        <v-col cols="12" xs="12" lg="4" class="d-flex justify-end">
+        <v-col cols="12" xs="12" lg="2" class="d-flex justify-end">
             <v-menu>
                 <template v-slot:activator="{ props }">
                     <v-btn
@@ -91,6 +98,7 @@ onBeforeMount(async ()=> {
                 v-for="(article, index) in articleList"
                 :key="`article-${index}`"
                 :article="article"
+                :is-timeline="false"
             />
         </v-col>
     </v-row>
