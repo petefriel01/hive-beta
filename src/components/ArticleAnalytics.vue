@@ -76,14 +76,14 @@ onBeforeMount(async() => {
 </script>
 <template>
     <v-row>
-        <v-col cols="12" xs="12" lg="12" class="my-4 my-md-8 devX" >
+        <v-col cols="12" xs="12" lg="12" class="my-4" >
             <h3>TOTAL ARTICLES PUBLISHED <span class="text-h2 float-right text-orange font-weight-bold">{{volume}}</span></h3>
             <p>VIEW: CURRENT WEEK</p>
         </v-col>
     </v-row>
-    <v-divider class="py-8 devX" />
+    <v-divider class="py-8" />
     <v-row>
-        <v-col cols="12" sm="6" md="6" lg="4" class="devX">
+        <v-col cols="12" sm="6" md="6" lg="4">
             <v-row>
                 <v-col cols="12" xs="12" lg="12" class="px-16">
                     <div class="px-8">
@@ -101,8 +101,3 @@ onBeforeMount(async() => {
     </v-row>
     <AppSpinner v-if="isLoading"/>
 </template>
-<style>
-    .dev{
-        border: solid 1px red;
-    }
-</style>

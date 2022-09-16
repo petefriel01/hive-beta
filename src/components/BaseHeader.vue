@@ -6,9 +6,9 @@ const { mobile } = useDisplay();
     <div app class="bg-grey-darken-2">
         <v-container>
             <v-row>
-                <v-col cols="12" class="devX text-center">
+                <v-col cols="12" class="text-center">
                     <h1>HIVE<span class="text-grey-lighten-1">🌌BETA</span></h1>
-                    <p class="text-grey-lighten-1 mb-2X font-weight-thin" style="font-size: 12px;letter-spacing: 2px;">SPACE NEWS TRENDS</p>
+                    <p class="text-grey-lighten-1 mb-2X font-weight-thin text-logo-small">SPACE NEWS TRENDS</p>
                 </v-col>
             </v-row>
             <v-row>
@@ -22,8 +22,9 @@ const { mobile } = useDisplay();
         </v-container>
     </div>
 </template>
-<style>
-    .dev{
-        border: solid 1px red;
+<style scoped>
+    .text-logo-small{
+        font-size: 12px;
+        letter-spacing: 3px;
     }
 </style>

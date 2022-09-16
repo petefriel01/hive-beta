@@ -20,6 +20,7 @@ const pageTotal = ref(0);
 const isLoading = ref(true);
 
 const handleSearch = (value: string = '') => {
+    console.log('handleSearch');
     searchText.value = value;
     const searchType = (!isSource.value) ? 'title' : 'newsSite';
     const articles = storeArticles.articles.filter((item) => {
@@ -132,8 +133,3 @@ onBeforeMount(async ()=> {
     </v-footer>
     <AppSpinner v-if="isLoading"/>
 </template>
-<style>
-    .dev{
-        border: solid 1px red;
-    }
-</style>

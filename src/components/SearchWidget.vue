@@ -6,23 +6,18 @@ defineProps({
         type: Array,
         required: false,
         default: null,
-    },
-    isSource: {
-        type: Boolean,
-        required: false,
-        default: null,
     }
 });
 
 const handleInput = (e) => {
-    emit('update:modelValue', e.target.value);
+    emit('update:modelValue', e.target.value.toLowerCase());
+    console.log(e.target.value);
 };
+
 </script>
 <template>
     <v-autocomplete
-        v-model="searchText"
         :items="titles"
-        :loading="isLoading"
         hide-no-data
         hide-selected
         item-title="Description"
@@ -30,6 +25,7 @@ const handleInput = (e) => {
         label="Space news articles"
         placeholder="Start typing to Search"
         @input="handleInput"
+        @keydown.enter="handleInput"
         return-object
     ></v-autocomplete>
 </template>
