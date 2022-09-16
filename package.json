@@ -5,6 +5,7 @@
     "serve": "vite preview",
     "build": "vite build",
     "test:unit": "vitest --environment jsdom",
+    "test": "vitest",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build-only": "vite build",
     "dev": "vite",
@@ -15,6 +16,7 @@
     "@mdi/font": "5.9.55",
     "apexcharts": "^3.35.5",
     "axios": "^0.27.2",
+    "happy-dom": "^6.0.4",
     "pinia": "^2.0.21",
     "roboto-fontface": "*",
     "vue": "^3.2.38",
@@ -40,7 +42,7 @@
     "typescript": "~4.7.4",
     "vite": "^3.0.9",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
-    "vitest": "^0.23.0",
+    "vitest": "^0.23.2",
     "vue-cli-plugin-vuetify": "~2.5.5",
     "vue-tsc": "^0.40.7"
   }

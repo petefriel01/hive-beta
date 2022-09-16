@@ -19,8 +19,11 @@ const pageSize = ref(5);
 const pageTotal = ref(0);
 const isLoading = ref(true);
 
+/**
+ * Controls article searching.
+ * @param {string} value search text
+ */
 const handleSearch = (value: string = '') => {
-    console.log('handleSearch');
     searchText.value = value;
     const searchType = (!isSource.value) ? 'title' : 'newsSite';
     const articles = storeArticles.articles.filter((item) => {
@@ -29,25 +32,38 @@ const handleSearch = (value: string = '') => {
     paginate(articles);
 };
 
+/**
+ * Controls pagination next button.
+ * @param {number} pageNumber number of pages to paginate.
+ */
 const handleNext = (pageNumber: number = 100) => {
     articleList.value = storeArticles.articles.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value);
 };
 
+/**
+ * Resets filter after source selection.
+ */
 const resetFilter = () => {
-    console.log('reset filter');
     paginate(storeArticles.articles);
 };
 
+/**
+ * Controls article filtering by news source.
+ * @param {string} source number of pages to paginate.
+ */
 const filterBySource = async (source: string = '') => {
     const articles =  storeArticles.articles.filter(item => item.newsSite === source);
     paginate(articles);
 };
 
+/**
+ * Controls pagination for all articles.
+ * @param {array} articles full article list
+ */
 const paginate = (articles: any[]) => {
     articleList.value =  articles.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
     pageTotal.value = Math.round(articles.length / pageSize.value);
     sourceList.value =  [...new Set( articleList.value.map((item) => item.newsSite))]; // Return array with sources only available from articleList
-    console.log(sourceList.value );
     isLoading.value = false;
 };
 

@@ -2,6 +2,10 @@
 const emit = defineEmits(['item-clicked', 'update:modelValue']);
 
 defineProps({
+    modelValue: {
+        type: String,
+        default: '',
+    },
     titles: {
         type: Array,
         required: false,
@@ -9,6 +13,9 @@ defineProps({
     }
 });
 
+/**
+ * Emits search text to parent.
+ */
 const handleInput = (e) => {
     emit('update:modelValue', e.target.value.toLowerCase());
     console.log(e.target.value);
