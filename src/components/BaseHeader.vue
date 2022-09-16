@@ -1,4 +1,4 @@
-<script setup type="ts">
+<script setup lang="ts">
 import { useDisplay } from 'vuetify';
 const { mobile } = useDisplay();
 </script>
@@ -8,15 +8,15 @@ const { mobile } = useDisplay();
             <v-row>
                 <v-col cols="12" class="devX text-center">
                     <h1>HIVE<span class="text-grey-lighten-1">🌌BETA</span></h1>
-                    <p class="text-grey-lighten-1 mb-2 font-weight-thin" style="font-size: 12px;letter-spacing: 2px;">SPACE NEWS TRENDS</p>
+                    <p class="text-grey-lighten-1 mb-2X font-weight-thin" style="font-size: 12px;letter-spacing: 2px;">SPACE NEWS TRENDS</p>
                 </v-col>
             </v-row>
-            <v-divider/>
             <v-row>
                 <v-col cols="12" class="text-left">
-                    <v-btn variant="text" :block="mobile" class="devX flex-grow-1X text-left" :to="{name: 'DashBoard'}">👨‍🚀 Analytics {{mobile}}</v-btn>
-                    <v-btn variant="text" :block="mobile" class="devX flex-grow-1X" :to="{name: 'ArticleTimeline'}">🌑 Article Timeline</v-btn>
-                    <v-btn variant="text" :block="mobile" class="devX flex-grow-1X" :to="{name: 'ArticleSearch'}">🔎 Advanced Search</v-btn>
+                    <v-divider class="py-1"/>
+                    <v-btn variant="text" class="py-2 py-md-0" :block="mobile" :to="{name: 'DashBoard'}">👨‍🚀 Analytics</v-btn>
+                    <v-btn variant="text" class="py-2 py-md-0" :block="mobile" :to="{name: 'ArticleTimeline'}">🌑 Article Timeline</v-btn>
+                    <v-btn variant="text" class="py-2 py-md-0" :block="mobile" :to="{name: 'ArticleSearch'}">🔎 Advanced Search</v-btn>
                 </v-col>
             </v-row>
         </v-container>

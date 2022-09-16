@@ -26,7 +26,6 @@ onBeforeMount(async() => {
         <v-timeline-item
             v-for="(day, index) in storyStack"
             :key="`timeline-item-${index}`"
-            size="large"
             class="mb-8"
         >
             <v-alert
@@ -34,7 +33,7 @@ onBeforeMount(async() => {
                 border="start"
                 density="default"
                 type="warning"
-                class="mb-6"
+                class="mb-6 d-none d-md-flex"
             >
                 <span class="flash-text">BREAKING NEWS</span>
             </v-alert>
@@ -42,7 +41,7 @@ onBeforeMount(async() => {
                 🚀
             </template>
             <template v-slot:opposite>
-                <h3 class="text-h3" v-html="$hivebeta.formatDate(day[index]?.publishedAt)"></h3>
+                <h3 class="text-xs-h6 text-md-h5 text-lg-h3 text-wrap font-weight-bold" v-html="$hivebeta.formatDate(day[index]?.publishedAt)"></h3>
             </template>
             <ArticleCard
                 v-for="(article, i) in storyStack[index]"
@@ -50,7 +49,7 @@ onBeforeMount(async() => {
                 :article="article"
                 :show-date="false"
             />
-            <h2 v-if="!day.length" class="text-uppercase mb-16">no articles</h2>
+            <h3 v-if="!day.length" class="text-uppercase mb-16">no articles</h3>
         </v-timeline-item>
     </v-timeline>
     <AppSpinner v-if="isLoading"/>

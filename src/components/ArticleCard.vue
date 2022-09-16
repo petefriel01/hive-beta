@@ -26,19 +26,19 @@ const { article, showDate } = toRefs(props);
         color="grey-lighten-2"
     >
         <v-row>
-            <v-col cols="12" xs="12" lg="10">
+            <v-col cols="12" xs="12" md="6">
                 <v-card-subtitle class="text-black font-weight-bold text-uppercase pt-4 text-orange-darken-4">
                     {{article.newsSite}} <span v-if="showDate" class="text-black">|</span>
                     <span v-if="showDate" class="ml-2 text-grey-darken-2" v-html="$hivebeta.formatDate(article.publishedAt)"></span>
                 </v-card-subtitle>
                 <v-card-title v-if="article.title">
-                    <v-btn variant="text" :href="article.url" target="_blank" class="text-wrap px-0 text-h6 text-black">
+                    <v-btn variant="text" :href="article.url" target="_blank" class="text-wrap px-0 text-black">
                         <span class="text-wrap ">{{article.title}}</span>
                     </v-btn>
                 </v-card-title>
             </v-col>
-            <v-col cols="12" xs="12" lg="2">
-                <img :src="article.imageUrl" class="float-right rounded" width="150" height="100" style="object-fit:cover" />
+            <v-col cols="12" xs="12" md="6">
+                <img :src="article.imageUrl" class="float-right rounded d-none d-sm-flex" width="150" height="100" style="object-fit:cover;" />
             </v-col>
         </v-row>
         <v-row>
@@ -66,8 +66,8 @@ const { article, showDate } = toRefs(props);
         </v-expand-transition>
     </v-card>
 </template>
-<style>
-    .dev{
-        border: solid 1px red;
+<style scoped>
+    html .v-btn.v-btn--density-default {
+        height: auto;
     }
 </style>

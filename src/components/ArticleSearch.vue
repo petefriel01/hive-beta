@@ -3,14 +3,12 @@
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue';
 
 import { useArticlesStore } from '@/stores/articles';
-import { useSourcesStore } from '@/stores/sources';
 
 const ArticleCard = defineAsyncComponent(() => import('@/components/ArticleCard.vue'));
 const SearchWidget = defineAsyncComponent(() => import('@/components/SearchWidget.vue'));
 const AppSpinner = defineAsyncComponent(() => import('@/components/AppSpinner.vue'));
 
 const storeArticles = useArticlesStore();
-const storeSources = useSourcesStore();
 
 const articleList = ref([]);
 const sourceList = ref([]);
@@ -60,12 +58,12 @@ onBeforeMount(async ()=> {
 </script>
 <template>
     <v-row class="d-flex align-center">
-        <v-col cols="12" xs="12" lg="2">
+        <v-col cols="12" xs="12" lg="2" class="d-none d-lg-flex">
             <h2 class="text-h4">Headlines</h2>
         </v-col>
         <v-col cols="12" xs="12" lg="8" class="pt-8">
             <v-row>
-                <v-col cols="2">
+                <v-col cols="12" xs="12" lg="2">
                     <v-checkbox
                         v-model="isSource"
                         label="News Source"
@@ -73,7 +71,7 @@ onBeforeMount(async ()=> {
                         class="float-right"
                     ></v-checkbox>
                 </v-col>
-                <v-col cols="8">
+                <v-col cols="12" xs="12" lg="8">
                     <SearchWidget @update:model-value="handleSearch" :titles="(isSource) ? sourceList : []"/>
                 </v-col>
             </v-row>
@@ -134,3 +132,8 @@ onBeforeMount(async ()=> {
     </v-footer>
     <AppSpinner v-if="isLoading"/>
 </template>
+<style>
+    .dev{
+        border: solid 1px red;
+    }
+</style>
