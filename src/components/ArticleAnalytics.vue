@@ -59,7 +59,6 @@ const areaOptions = reactive({
         categories: chartDays.value
     }
 });
-
 const areaSeries = reactive( [{
     name: 'series-1',
     data: chartData.value
@@ -76,15 +75,15 @@ onBeforeMount(async() => {
 
 </script>
 <template>
-    <v-row class=" text-leftX devX">
-        <v-col cols="12" xs="12" lg="12" class="my-8">
+    <v-row>
+        <v-col cols="12" xs="12" lg="12" class="my-4 my-md-8 devX" >
             <h3>TOTAL ARTICLES PUBLISHED <span class="text-h2 float-right text-orange font-weight-bold">{{volume}}</span></h3>
             <p>VIEW: CURRENT WEEK</p>
         </v-col>
     </v-row>
     <v-divider class="py-8 devX" />
     <v-row>
-        <v-col cols="12" xs="12" lg="4">
+        <v-col cols="12" sm="6" md="6" lg="4" class="devX">
             <v-row>
                 <v-col cols="12" xs="12" lg="12" class="px-16">
                     <div class="px-8">
@@ -96,7 +95,7 @@ onBeforeMount(async() => {
                 </v-col>
             </v-row>
         </v-col>
-        <v-col cols="12" xs="12" lg="8">
+        <v-col cols="12" sm="6" md="6" lg="8">
             <apexchart width="100%" type="area" :options="areaOptions" :series="areaSeries"></apexchart>
         </v-col>
     </v-row>

@@ -1,10 +1,19 @@
 // Styles
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify/styles'
+import '@mdi/font/css/materialdesignicons.css';
+import 'vuetify/styles';
 
 // Vuetify
-import { createVuetify } from 'vuetify'
+import { createVuetify } from 'vuetify';
 
-export default createVuetify(
-  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-)
+export default createVuetify({
+    display: {
+        mobileBreakpoint: 'md',
+        thresholds: {
+            xs: 0,
+            sm: 414,
+            md: 768,
+            lg: 1024,
+            xl: 1440,
+        },
+    },
+});

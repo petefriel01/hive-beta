@@ -32,7 +32,7 @@ const { article, showDate } = toRefs(props);
                     <span v-if="showDate" class="ml-2 text-grey-darken-2" v-html="$hivebeta.formatDate(article.publishedAt)"></span>
                 </v-card-subtitle>
                 <v-card-title v-if="article.title">
-                    <v-btn flat :href="article.url" target="_blank" class="text-wrap px-0 text-h6">
+                    <v-btn variant="text" :href="article.url" target="_blank" class="text-wrap px-0 text-h6 text-black">
                         <span class="text-wrap ">{{article.title}}</span>
                     </v-btn>
                 </v-card-title>

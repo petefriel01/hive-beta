@@ -34,6 +34,11 @@ const handleNext = (pageNumber: number = 100) => {
     articleList.value = storeArticles.articles.slice((pageNumber - 1) * pageSize.value, pageNumber * pageSize.value);
 };
 
+const resetFilter = () => {
+    console.log('reset filter');
+    paginate(storeArticles.articles);
+};
+
 const filterBySource = async (source: string = '') => {
     const articles =  storeArticles.articles.filter(item => item.newsSite === source);
     paginate(articles);
@@ -77,6 +82,7 @@ onBeforeMount(async ()=> {
             <v-menu>
                 <template v-slot:activator="{ props }">
                     <v-btn
+                        :disabled="isSource"
                         v-bind="props"
                     >
                         Filter
@@ -93,6 +99,13 @@ onBeforeMount(async ()=> {
                     </v-list-item>
                 </v-list>
             </v-menu>
+            <v-btn
+                variant="text"
+                :disabled="isSource"
+                @click="resetFilter()"
+            >
+                Clear
+            </v-btn>
         </v-col>
     </v-row>
     <v-row>
