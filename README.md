@@ -1,3 +1,5 @@
+![Screenshot](screenshot.png)
+
 # HIVEBETA
 
 Space News Trends Portal.
